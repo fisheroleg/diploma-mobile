@@ -1,17 +1,31 @@
 package listexmobile.listex.info.listexmobile.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
-import listexmobile.listex.info.listexmobile.*;
+import listexmobile.listex.info.listexmobile.MainActivity;
+import listexmobile.listex.info.listexmobile.R;
+import listexmobile.listex.info.listexmobile.fragments.adapters.SearchAdapter;
 import listexmobile.listex.info.listexmobile.helpers.CamLoader;
+import listexmobile.listex.info.listexmobile.helpers.TransitionManager;
+import listexmobile.listex.info.listexmobile.models.Good;
+import listexmobile.listex.info.listexmobile.models.SearchResult;
+import listexmobile.listex.info.listexmobile.networking.CardLoader;
 import listexmobile.listex.info.listexmobile.networking.ReviewLoader;
+import listexmobile.listex.info.listexmobile.networking.SearchLoader;
 
 /**
  * Created by oleg-note on 01.11.2015.
@@ -19,30 +33,41 @@ import listexmobile.listex.info.listexmobile.networking.ReviewLoader;
 public class FragmentSearch extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        final View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        ReviewLoader rl = new ReviewLoader(
-                "latest",
-                ((LinearLayout) view.findViewById(R.id.ll_latest_reviews_list)),
-                getContext()
-        );
-        rl.execute();
+        SearchView sv = (SearchView) view.findViewById(R.id.search_view);
 
-        View.OnClickListener mScanHandler = new View.OnClickListener() {
+        final SearchView.OnQueryTextListener osl = new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View v) {
-                Callable<Void> c = new Callable<Void>() {
-                    public Void call() {
-                        return FragmentRec.openScanActivity(getActivity());
-                    }
-                };
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
 
-                CamLoader cl = new CamLoader(c);
-                cl.execute();
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                final ListView lvResults = (ListView) view.findViewById(R.id.lv_search_results);
+                lvResults.setAdapter(new SearchAdapter(getContext(), new ArrayList<SearchResult>()));
+                lvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View view,
+                                            int position, long id) {
+                        String GTIN = ((SearchAdapter) lvResults.getAdapter()).getItem(position).getGTIN();
+                        (new CardLoader(GTIN, MainActivity.fragmentManager)).execute();
+                    }
+                });
+
+                SearchLoader rl = new SearchLoader(
+                        query,
+                        lvResults,
+                        getContext(),
+                        (TextView) view.findViewById(R.id.search_message)
+                );
+                rl.execute();
+
+                return false;
             }
         };
-        ((android.support.design.widget.FloatingActionButton) view.findViewById(R.id.fab_scan))
-                .setOnClickListener(mScanHandler);
+
+        sv.setOnQueryTextListener(osl);
 
         return view;
     }

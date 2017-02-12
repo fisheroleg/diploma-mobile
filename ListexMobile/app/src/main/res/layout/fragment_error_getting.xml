@@ -4,10 +4,25 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
 
-    <ProgressBar
-        android:layout_width="@dimen/notification_large_icon_height"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminate="true"
+        android:orientation="vertical"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/error_loading"
+            android:layout_gravity="center_vertical|center_horizontal"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/good_error"
+            android:id="@+id/textView"
+            android:textColor="#ffffff"
+             />
+    </LinearLayout>
 </RelativeLayout>

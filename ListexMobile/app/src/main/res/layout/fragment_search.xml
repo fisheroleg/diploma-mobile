@@ -1,44 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:text="Latest reviews"
-            android:id="@+id/textView6"
-            style="@style/HeaderUnderline"
-            />
 
-        <LinearLayout
-            android:id="@+id/ll_latest_reviews_list"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <include layout="@layout/search_view" />
 
-            <ProgressBar
-                android:layout_width="64dp"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:layout_gravity="center_horizontal" />
-        </LinearLayout>
-    </LinearLayout>
+    <TextView
+        android:text="@string/search_results"
+        android:id="@+id/textView6"
+        style="@style/HeaderUnderline"
+        />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_scan"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_camera"
-        app:backgroundTint="#EF6C00"
-        android:gravity="end"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-</RelativeLayout>
+        android:layout_gravity="center_horizontal"
+        android:text="@string/search_message"
+        android:layout_margin="10dp"
+        android:id="@+id/search_message" />
+
+    <ListView
+        android:id="@+id/lv_search_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+</LinearLayout>

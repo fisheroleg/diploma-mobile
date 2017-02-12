@@ -1,31 +1,40 @@
 package listexmobile.listex.info.listexmobile.fragments.adapters;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.CompoundButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import listexmobile.listex.info.listexmobile.R;
+import listexmobile.listex.info.listexmobile.models.Attr;
 import listexmobile.listex.info.listexmobile.models.Good;
-import listexmobile.listex.info.listexmobile.models.SearchResult;
 
 /**
  * Created by oleg-note on 26.04.2016.
  */
 
-public class SearchAdapter extends BaseAdapter {
+public class FavAdapter extends BaseAdapter {
     Context mContext;
     LayoutInflater mLInflater;
-    ArrayList<SearchResult> mResults;
+    ArrayList<Good> mGoods;
 
-    public SearchAdapter(Context context, ArrayList<SearchResult> results) {
+    public FavAdapter(Context context, ArrayList<Good> goods) {
         this.mContext = context;
-        this.mResults = results;
+        this.mGoods = goods;
         this.mLInflater = (LayoutInflater) this.mContext
                 .getSystemService(this.mContext.LAYOUT_INFLATER_SERVICE);
     }
@@ -33,23 +42,23 @@ public class SearchAdapter extends BaseAdapter {
     // кол-во элементов
     @Override
     public int getCount() {
-        return this.mResults.size();
+        return this.mGoods.size();
     }
 
     // элемент по позиции
     @Override
-    public SearchResult getItem(int position) {
-        return mResults.get(position);
+    public Good getItem(int position) {
+        return mGoods.get(position);
     }
 
     // id по позиции
     @Override
     public long getItemId(int position) {
-        return Integer.parseInt(mResults.get(position).getGoodId());
+        return mGoods.get(position).getId();
     }
 
-    public void changeDataset(ArrayList<SearchResult> results) {
-        mResults = results;
+    public void deleteItem(int position) {
+        mGoods.remove(position);
     }
 
     // пункт списка
@@ -58,13 +67,13 @@ public class SearchAdapter extends BaseAdapter {
         View v = convertView;
         if (v == null)
             v = LayoutInflater.from(mContext)
-                .inflate(R.layout.search_result_item, null);
-        ((TextView) v.findViewById(R.id.search_result_title))
-                .setText(this.mResults.get(position).getName());
-        ((TextView) v.findViewById(R.id.search_result_tm))
-                .setText(this.mResults.get(position).getTMName());
-        //((RatingBar) v.findViewById(R.id.list_good_rating))
-        //        .setRating(this.mGoods.get(position).getRating());
+                .inflate(R.layout.list_item, null);
+        ((TextView) v.findViewById(R.id.list_good_name))
+                .setText(this.mGoods.get(position).getName());
+        //((TextView) v.findViewById(R.id.list_good_dtc))
+        //        .setText(this.mGoods.get(position).getDTC());
+        ((RatingBar) v.findViewById(R.id.list_good_rating))
+                .setRating(this.mGoods.get(position).getRating());
 
         return v;
     }

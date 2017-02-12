@@ -4,9 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.SearchView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/search_view" />
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:id="@+id/ll_quick_search">
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/search"
+            android:clickable="false"
+            android:duplicateParentState="true"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:background="@color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:duplicateParentState="true"
+            android:clickable="false"
+            android:text="@string/main_search"
+            android:layout_gravity="center_horizontal"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="15dp"
+        android:id="@+id/ll_quick_map">
+        <ImageButton
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/map"
+            android:duplicateParentState="true"
+            android:clickable="false"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:background="@color/white" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_map"
+            android:duplicateParentState="true"
+            android:clickable="false"
+            android:layout_gravity="center_horizontal"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large" />
+    </LinearLayout>
 
 </LinearLayout>
